@@ -1,0 +1,25 @@
+name: Network Sandbox
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  network-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install networking tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y net-tools iproute2 curl
+
+      - name: Run network commands
+        run: |
+          ping -c 4 google.com
+          ifconfig
+          ip route show
